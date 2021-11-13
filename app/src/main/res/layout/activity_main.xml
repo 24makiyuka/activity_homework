@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/imageView2"
+        android:visibility="gone"
         android:layout_width="307dp"
         android:layout_height="177dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="이름:"
+        android:hint="글쓴 사람 이름"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="내용"
         android:inputType="textPersonName"
-        android:text="내용:"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit1" />
 

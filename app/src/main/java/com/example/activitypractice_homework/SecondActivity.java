@@ -15,35 +15,13 @@ import android.provider.MediaStore;
 import com.example.activitypractice_homework.databinding.ActivityMainBinding;
 import com.example.activitypractice_homework.databinding.ActivitySecondBinding;
 
+import java.text.DateFormat;
+
 public class SecondActivity extends AppCompatActivity {
     private ActivitySecondBinding binding;
 
-    ActivityResultLauncher<Intent> resultLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    result -> {
-                        Intent data = result.getData();
-
-                        if (result.getResultCode() == RESULT_OK && null != data) {
-                            Uri selectedImage = data.getData();
-                            Bitmap bitmap = loadBitmap(selectedImage);
-                            binding.imageView.setImageBitmap(bitmap);
-                        }
-                    });
 
 
-    private Bitmap loadBitmap(Uri uri) {
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getContentResolver().query(uri,
-                filePathColumn,null,null,null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        return BitmapFactory.decodeFile(picturePath);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +31,21 @@ public class SecondActivity extends AppCompatActivity {
         binding.button.setOnClickListener(v -> finish());
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("EXTRA_MESSAGE");
-        binding.textView1.setText(message);
+        String name = intent.getStringExtra("EXTRA_NAME");
+        String content = intent.getStringExtra("EXTRA_CONTENT");
+//        long timestamp = intent.getLongExtra("EXTRA_TIME",0);
+        Uri image = intent.getParcelableExtra("EXTRA_IMAGE");
+
+        binding.textView1.setText(name);
+        binding.textView2.setText(content);
+        Bitmap bitmap = Utils.loadBitmap(this,image);
+        binding.imageView.setImageBitmap(bitmap);
+//        binding.textData.setText(getData(timestamp));
 
     }
+
+//    private String getData(long time) {
+//        return DateFormat("yyyy-MM-dd HH:mm:ss", time).toString();
+//    }
+
 }
